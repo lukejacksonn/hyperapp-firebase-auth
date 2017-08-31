@@ -1,6 +1,8 @@
 # Fauth
 
-> A drop in authentication solution for hyperapps
+> Drop in authentication for hyperapps
+
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/1457604/29901861-6cf8c5d4-8df2-11e7-9611-e2800e7bde96.gif)
 
 This project exports a hyperapp mixin that wraps the Firebase authentication API. It manages the application state and renders appropriate views for the authentication flows `Sign In` and `Sign Up`. Out of the box features include:
 
