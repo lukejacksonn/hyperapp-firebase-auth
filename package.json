@@ -9,7 +9,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rollup -i src/index.js -o dist/fauth.js -m -f umd -n hyperapp-fauth",
+    "build": "rollup -i src/index.js -o dist/fauth.js -m -f umd -n fauth",
     "prepublish": "npm run build"
   },
   "dependencies": {
