@@ -1,12 +1,21 @@
 {
-  "name": "fauth",
+  "name": "hyperapp-fauth",
   "version": "1.0.0",
-  "description": "> A drop in authentication solution for hyperapps",
-  "main": "index.js",
+  "description": "A drop in authentication solution for hyperapps",
+  "main": "dist/fauth.js",
+  "jsnext:main": "src/index.js",
+  "files": [
+    "src",
+    "dist"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rollup -i src/index.js -o dist/fauth.js -m -f umd -n hyperapp-fauth",
+    "prepublish": "npm run build"
+  },
+  "dependencies": {
+    "rollup": "^0.49.1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Luke Jackson",
+  "license": "MIT"
 }
