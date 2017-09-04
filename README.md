@@ -13,6 +13,8 @@ This project exports a hyperapp mixin that wraps the Firebase authentication API
 - Compatible with @hyperapp/router
 - No backend code!
 
+DEMO: https://codepen.io/lukejacksonn/pen/xLBJoN
+
 ## Setup
 
 If you want to utilize Firebase Authentication for your own apps then you will need to create a Firebase Account and create a new project. This can be done for **free** at https://console.firebase.google.com (if you don't want to create your own project and just want to try the mixin out then you can use the example config below). Once you have created a project you will be presented with your application's configuration which will look something like this:
@@ -46,7 +48,7 @@ That is all the back and front end configuration you need to do.. Phew :sweat_sm
 
 ## Usage
 
-Assuming you now have a Firebase project and have configured it on the frontend; then all that is left to do is to list `fauth` in your hyperapp mixins.
+Assuming you now have a Firebase project and have configured it on the frontend; then all that is left to do is to list `fauth` in your hyperapp mixins (if you want to make it look pretty also, then you will want to include [styles.css](https://github.com/lukejacksonn/fauth/blob/master/styles.css) in your project).
 
 ```
 import { app, h } from 'hyperapp'
