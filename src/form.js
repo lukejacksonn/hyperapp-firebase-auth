@@ -22,7 +22,7 @@ h('form', {
     e.preventDefault()
     return action(parseFormInputs(e.target))
   }
-}, [
+},[
   h('header', {}, [
     h('h3', {}, titleText),
     h('p', {}, promptText),

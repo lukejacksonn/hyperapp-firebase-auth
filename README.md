@@ -1,6 +1,6 @@
-# Fauth
+# hyperapp-firebase-auth
 
-> Drop in authentication for hyperapps
+> Drop in authentication for hyperapps using firebase
 
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/1457604/29901861-6cf8c5d4-8df2-11e7-9611-e2800e7bde96.gif)
 
@@ -48,17 +48,17 @@ That is all the back and front end configuration you need to do.. Phew :sweat_sm
 
 ## Usage
 
-Assuming you now have a Firebase project and have configured it on the frontend; then all that is left to do is to list `fauth` in your hyperapp mixins (if you want to make it look pretty also, then you will want to include [styles.css](https://github.com/lukejacksonn/fauth/blob/master/styles.css) in your project).
+Assuming you now have a Firebase project and have configured it on the frontend; then all that is left to do is to include `firebaseAuth` in your hyperapp mixins (if you want to make it look pretty also, then you will want to include [styles.css](https://github.com/lukejacksonn/hyperapp-firebase-auth/blob/master/styles.css) in your project).
 
 ```
 import { app, h } from 'hyperapp'
-import fauth from 'hyperapp-fauth'
+import { firebaseAuth } from 'hyperapp-firebase-auth'
 
 app({
   state: {},
   view: state =>
-    h('main', { auth: true }, `Hello ${state.fauth.user.uid}!`),
-  mixins: [fauth]
+    h('main', { auth: true }, `Hello ${state.firebaseAuth.user.uid}!`),
+  mixins: [firebaseAuth]
 })
 ```
 
