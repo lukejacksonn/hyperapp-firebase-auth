@@ -1,0 +1,121 @@
+html {
+  font-size: calc(8px + 2vmin);
+  line-height: 138%;
+  font-family: sans-serif;
+  background: white;
+}
+
+body,
+body * {
+  display: block;
+  background: none;
+  box-sizing: border-box;
+  color: rgba(0, 0, 0, 0.8);
+  margin: 0;
+  border: 0;
+  padding: 0;
+  outline: 0;
+}
+
+style,
+script {
+  display: none;
+}
+
+body,
+noscript {
+  height: 100vh;
+  display: flex;
+}
+
+main {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+main > * + * {
+  margin-top: 1rem;
+}
+main button {
+  font-size: .62rem;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  padding: .5rem;
+}
+main button:hover {
+  text-decoration: underline;
+}
+
+dialog {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 16rem;
+  margin: auto;
+}
+form * + * {
+  margin-top: 1rem;
+}
+form header h3 {
+  color: rgba(0, 0, 0, 0.8);
+}
+form header p {
+  font-size: .8rem;
+  color: rgba(0, 0, 0, 0.5);
+  line-height: 150%;
+}
+form footer > * + * {
+  margin-top: 0;
+}
+form footer:empty {
+  display: none;
+}
+form footer a {
+  font-size: .62rem;
+  color: #1e88e5;
+}
+form error- {
+  font-size: .5rem;
+  color: #d50000;
+  line-height: 138%;
+}
+form label {
+  width: 100%;
+}
+form input {
+  width: 100%;
+  padding: .5rem;
+  padding-left: 0;
+  font-size: 1rem;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+  border-radius: 0;
+  color: rgba(0, 0, 0, 0.5);
+}
+form input:focus {
+  border-bottom: 2px solid #4285f4;
+}
+form button[type='submit'] {
+  padding: .5rem;
+  width: auto;
+  font-size: .62rem;
+  text-transform: uppercase;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  background-color: #1e88e5;
+  color: #fff;
+  transition: box-shadow .2s;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.39);
+}
+form button[type='submit']:hover, form button[type='submit']:focus {
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.39);
+}
