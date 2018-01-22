@@ -1,7 +1,45 @@
-import { h } from 'hyperapp'
-import $form from './form'
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('hyperapp')) :
+	typeof define === 'function' && define.amd ? define(['exports', 'hyperapp'], factory) :
+	(factory((global.HyperappFirebaseAuth = {}),global.hyperapp));
+}(this, (function (exports,hyperapp) { 'use strict';
 
-const auth = firebase.auth()
+const parseFormInputs = form =>
+  Array.from(form.elements)
+    .filter(input => input.type !== 'submit')
+    .reduce((a,{ name, value }) => Object.assign(a, { [name]: value }), {});
+
+var $form = ({
+  key = 'form-' + Math.floor(Math.random()*100),
+  titleText = 'Untitled Form',
+  promptText = 'Please fill out and submit the form below',
+  submitText = 'Submit',
+  inputs = [{ name: 'lorem', type: 'text', placeholder: 'Example Input' }],
+  action = data => console.log('Submitted', data),
+  errorText = '',
+  links = []
+}) =>
+hyperapp.h('form', {
+  key,
+  oncreate: e => e.elements[0].focus(),
+  onsubmit: e => {
+    e.preventDefault();
+    return action(parseFormInputs(e.target))
+  }
+},[
+  hyperapp.h('header', {}, [
+    hyperapp.h('h3', {}, titleText),
+    hyperapp.h('p', {}, promptText),
+  ]),
+  inputs.map(props => hyperapp.h('label', { style: { display: props.type === 'hidden' ? 'none' : false }}, hyperapp.h('input', props))),
+  errorText && hyperapp.h('error-', {}, errorText),
+  hyperapp.h('button', { type: 'submit' }, submitText),
+  hyperapp.h('footer', {}, links.map(x =>
+    hyperapp.h('a', { href: '#', onclick: e => e.preventDefault() || x.action() }, x.text)
+  )),
+])
+
+const auth = firebase.auth();
 
 const $identity = (s,a) => $form({
   key: 'identity-form',
@@ -13,7 +51,7 @@ const $identity = (s,a) => $form({
     name: 'email', type: 'email', placeholder: 'Email Address', autocomplete: 'email'
   }],
   action: a.firebaseAuth.fetchProviders,
-})
+});
 
 const $signin = (s,a) => $form({
   key: 'signin-form',
@@ -30,7 +68,7 @@ const $signin = (s,a) => $form({
     { text: 'Sign in with a different identity', action: a.firebaseAuth.resetIdentity },
     { text: 'Reset password', action: a.firebaseAuth.resetPassword },
   ],
-})
+});
 
 const $signup = (s,a) => $form({
   key: 'signup-form',
@@ -46,14 +84,14 @@ const $signup = (s,a) => $form({
   links: [
     { text: 'Sign in with a different identity', action: a.firebaseAuth.resetIdentity }
   ],
-})
+});
 
 const $auth = (s,a) =>
-  h('dialog', {}, [
+  hyperapp.h('dialog', {}, [
     !s.firebaseAuth.user.email
       ? $identity(s,a)
       : s.firebaseAuth.hasIdentity.length ? $signin(s,a) : $signup(s,a),
-  ])
+  ]);
 
 var state = {
   firebaseAuth: {
@@ -70,25 +108,25 @@ const actions = {
     setHasIdentity: hasIdentity => ({ hasIdentity }),
     setUser: user => ({ user }),
     setError: error => ({ error }),
-    signout: () => {auth.signOut()},
+    signout: () => {auth.signOut();},
     signin: ({email, password}) => (s,a,) => {
-      a.setError({})
+      a.setError({});
       auth.signInWithEmailAndPassword(email, password)
-        .catch(a.setError)
+        .catch(a.setError);
     },
     signup: ({email, password}) => (s,a,) => {
-      a.setError({})
-      a.setUser({ email })
+      a.setError({});
+      a.setUser({ email });
       auth.createUserWithEmailAndPassword(email, password)
-        .catch(a.setError)
+        .catch(a.setError);
     },
     fetchProviders: ({email}) => (s,a,) => {
-      a.setError({})
+      a.setError({});
       auth.fetchProvidersForEmail(email)
         .then(providers => {
-          a.setUser({ email })
-          a.setHasIdentity(providers)
-        }).catch(a.setError)
+          a.setUser({ email });
+          a.setHasIdentity(providers);
+        }).catch(a.setError);
     },
     userChanged: user => (s,a) => ({
       user: user || {},
@@ -109,13 +147,13 @@ const actions = {
 
 const authf = v => (s, a) => {
   if(!s.firebaseAuth.checked) 
-    return h('auth-check')
+    return hyperapp.h('auth-check')
   if(!s.firebaseAuth.authed && v(s,a).props.auth)  
     return $auth(s,a);
   return v(s,a);
-}
+};
 
-const faView = v => (s, a) => h("div", {
+const faView = v => (s, a) => hyperapp.h("div", {
     id: "auth",
     oncreate: e => auth.onAuthStateChanged(a.firebaseAuth.userChanged),
   }, 
@@ -125,8 +163,11 @@ const faView = v => (s, a) => h("div", {
 const faState = s => Object.assign({}, s, state);
 const faActions = a => Object.assign({}, a, actions);
 
-export  {
-  faState,
-  faActions,
-  faView
-};
+exports.faState = faState;
+exports.faActions = faActions;
+exports.faView = faView;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
+//# sourceMappingURL=index.js.map
