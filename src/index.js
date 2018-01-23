@@ -105,16 +105,19 @@ export const firebaseAuth = {
     signout: () => {
       auth.signOut()
     },
-    signin: ({ email, password }) => ({ setError }) => {
+    signin: ({ email, password }) => (_, { setError }) => {
       setError()
       auth.signInWithEmailAndPassword(email, password).catch(setError)
     },
-    signup: ({ email, password }) => ({ setError, setUser }) => {
+    signup: ({ email, password }) => (_, { setError, setUser }) => {
       setError()
       setUser({ email })
       auth.createUserWithEmailAndPassword(email, password).catch(setError)
     },
-    fetchProviders: ({ email }) => ({ setError, setUser, setHasIdentity }) => {
+    fetchProviders: ({ email }) => (
+      _,
+      { setError, setUser, setHasIdentity }
+    ) => {
       setError()
       auth
         .fetchProvidersForEmail(email)
@@ -124,7 +127,7 @@ export const firebaseAuth = {
         })
         .catch(setError)
     },
-    resetPassword: _ => ({ email, setError }) =>
+    resetPassword: ({ email }) => (_, { setError }) =>
       confirm(`Send a password reset email to ${email}?`) &&
       auth
         .sendPasswordResetEmail(email)
