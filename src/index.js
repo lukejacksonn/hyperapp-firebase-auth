@@ -1,5 +1,5 @@
 import { h } from 'hyperapp'
-import $form from './form'
+import Form from './form'
 
 const auth = firebase.auth()
 
