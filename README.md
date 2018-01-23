@@ -1,10 +1,10 @@
 # hyperapp-firebase-auth
 
-> Drop in authentication for hyperapps using firebase
+> Drop in firebase authentication for hyperapps
 
 ![ezgif com-gif-maker](https://user-images.githubusercontent.com/1457604/29901861-6cf8c5d4-8df2-11e7-9611-e2800e7bde96.gif)
 
-This project exports a [hyperapp](https://github.com/hyperapp/hyperapp) [mixin](https://github.com/hyperapp/hyperapp/blob/master/docs/mixins.md) that wraps the [Firebase authentication API](https://firebase.google.com/docs/auth/). It manages the application state and renders appropriate views for the authentication flows `Sign In` and `Create User`.
+This project exports a [hyperapp](https://github.com/hyperapp/hyperapp) module (state/actions/view) that wraps the [Firebase authentication API](https://firebase.google.com/docs/auth/). It manages the application state and renders appropriate views for the authentication flows `Sign In` and `Create User`.
 
 Out of the box features include:
 
@@ -25,30 +25,38 @@ Install the package from npm or include from [CDN](https://unpkg.com/hyperapp-fi
 npm i hyperapp-firebase-auth
 ```
 
-Import `firebaseAuth` and add it to mixins, then add `{ auth: true }` prop to the root view:
+Import the module `firebaseAuth` and the view `FirebaseAuth`
 
 ```js
 import { app, h } from 'hyperapp'
-import { firebaseAuth } from 'hyperapp-firebase-auth'
+import { firebaseAuth, FirebaseAuthDialog } from 'hyperapp-firebase-auth'
 
-app({
-  state: {},
-  view: state => h('main', { auth: true }, `Hello ${state.firebaseAuth.user.uid}!`),
-  mixins: [firebaseAuth]
-})
+const main =
+  app(
+    { auth: firebaseAuth.state },
+    { auth: firebaseAuth.actions },
+    (state, actions) =>
+      h('main', {}, [
+        // Only shows when NOT authenticated
+        FirebaseAuthDialog(state.auth, actions.auth),
+        // Only shows when authenticated
+        state.auth.authed && `Hello ${state.auth.user.uid}!`
+      ]),
+    document.body
+  )
+
+firebase.auth().onAuthStateChanged(main.userChanged)
 ```
 **DEMO:** https://codepen.io/lukejacksonn/pen/xLBJoN
 
 
 ## How it works
 
-- The mixin will check the view root for the prop `{ auth: true }`
-- If the view requires auth then the mixin prevents the view from rendering
 - An empty element is rendered until an auth status is received from Firebase
-- If the auth status is null then all users are prompted to enter their email address
+- If the auth status is null then the user is prompted to enter their email address
   - Existing users are then prompted to enter their password to sign in
   - New users are prompted to confirm their email address and set a password to sign up
-- The root view will be rendered once auth status returns a valid Firebase user
+- The dialog will not be rendered once auth status returns a valid Firebase user
 
 
 ## Firebase Setup

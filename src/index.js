@@ -64,16 +64,24 @@ const Signup = (state, actions) =>
     ],
   })
 
-export const Auth = (state, actions) =>
-  h('dialog', {}, [
-    !model.user.email
-      ? Identity(state, actions)
-      : model.hasIdentity.length
-        ? Signin(state, actions)
-        : Signup(state, actions),
-  ])
+export const FirebaseAuthDialog = (state, actions) =>
+  state.checked &&
+  !state.authed &&
+  h(
+    'dialog',
+    {
+      key: 'firebase-auth-dialog',
+    },
+    [
+      !state.user.email
+        ? Identity(state, actions)
+        : state.hasIdentity.length
+          ? Signin(state, actions)
+          : Signup(state, actions),
+    ]
+  )
 
-export const auth = {
+export const firebaseAuth = {
   state: {
     authed: false,
     checked: false,
