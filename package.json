@@ -1,14 +1,15 @@
 {
   "name": "hyperapp-firebase-auth",
-  "version": "0.1.0",
-  "description":
-    "A drop in authentication solution for hyperapps using firebase",
+  "version": "0.2.0",
+  "description": "A drop in authentication solution for hyperapps using firebase",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
-  "files": ["src", "dist"],
+  "files": [
+    "src",
+    "dist"
+  ],
   "scripts": {
-    "build":
-      "rollup -i src/index.js -o dist/index.js -m -g hyperapp:hyperapp -f umd -n HyperappFirebaseAuth",
+    "build": "rollup -i src/index.js -o dist/index.js -m -g hyperapp:hyperapp -f umd -n HyperappFirebaseAuth",
     "prepublish": "npm run build"
   },
   "dependencies": {
@@ -18,7 +19,13 @@
   "peerDependencies": {
     "hyperapp": "^1.0.3"
   },
-  "keywords": ["hyperapp", "firebase", "authentication", "mixin", "ui"],
+  "keywords": [
+    "hyperapp",
+    "firebase",
+    "authentication",
+    "mixin",
+    "ui"
+  ],
   "author": "Luke Jackson",
   "license": "MIT"
 }
