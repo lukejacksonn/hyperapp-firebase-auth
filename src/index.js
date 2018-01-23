@@ -1,7 +1,7 @@
 import { h } from 'hyperapp'
 import $form from './form'
 
-const firebaseAuth = firebase.auth()
+const auth = firebase.auth()
 
 const Identity = (state, actions) =>
   Form({
@@ -103,22 +103,20 @@ export const firebaseAuth = {
       error: {},
     }),
     signout: () => {
-      firebaseAuth.signOut()
+      auth.signOut()
     },
     signin: ({ email, password }) => ({ setError }) => {
       setError()
-      firebaseAuth.signInWithEmailAndPassword(email, password).catch(setError)
+      auth.signInWithEmailAndPassword(email, password).catch(setError)
     },
     signup: ({ email, password }) => ({ setError, setUser }) => {
       setError()
       setUser({ email })
-      firebaseAuth
-        .createUserWithEmailAndPassword(email, password)
-        .catch(setError)
+      auth.createUserWithEmailAndPassword(email, password).catch(setError)
     },
     fetchProviders: ({ email }) => ({ setError, setUser, setHasIdentity }) => {
       setError()
-      firebaseAuth
+      auth
         .fetchProvidersForEmail(email)
         .then(providers => {
           setUser({ email })
@@ -128,7 +126,7 @@ export const firebaseAuth = {
     },
     resetPassword: _ => ({ email, setError }) =>
       confirm(`Send a password reset email to ${email}?`) &&
-      firebaseAuth
+      auth
         .sendPasswordResetEmail(email)
         .then(_ =>
           alert(
