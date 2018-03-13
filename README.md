@@ -6,14 +6,14 @@
 
 This project exports a [hyperapp](https://github.com/hyperapp/hyperapp) module (state/actions/view) that wraps the [Firebase authentication API](https://firebase.google.com/docs/auth/). It manages the application state and renders appropriate views for the authentication flows `Sign In` and `Create User`.
 
+**DEMO:** https://codepen.io/lukejacksonn/pen/xLBJoN
+
 Out of the box features include:
 
 - No server setup or backend code
 - Human readable error messages
 - Email validation and confirmation
 - Reset password by email
-- Compatible with [@hyperapp/router](https://github.com/hyperapp/router)
-
 
 ## Usage
 
@@ -25,7 +25,7 @@ Install the package from npm or include from [CDN](https://unpkg.com/hyperapp-fi
 npm i hyperapp-firebase-auth
 ```
 
-Import the module `firebaseAuth` and the view `FirebaseAuth`
+Import the module `firebaseAuth` and the `FirebaseAuthDialog` view:
 
 ```js
 import { app, h } from 'hyperapp'
@@ -45,9 +45,8 @@ const main =
     document.body
   )
 
-firebase.auth().onAuthStateChanged(main.userChanged)
+firebase.auth().onAuthStateChanged(main.auth.userChanged)
 ```
-**DEMO:** https://codepen.io/lukejacksonn/pen/xLBJoN
 
 
 ## How it works
@@ -61,7 +60,7 @@ firebase.auth().onAuthStateChanged(main.userChanged)
 
 ## Firebase Setup
 
-If you want to utilize Firebase Authentication for your own apps then you will need to create a Firebase Account and create a new project. This can be done for **free** at https://console.firebase.google.com.
+If you want to use Firebase Authentication for your own apps then you will need to create a Firebase Account and create a new project. This can be done for **free** at https://console.firebase.google.com.
 
 > If you don't want to create your own project then you can use the example config below
 
@@ -82,12 +81,10 @@ Once you have created a project you will be presented with an app configuration 
 </script>
 ```
 
-Add this snippet to your `index.html` **before** your hyperapp application code. This ensures that the Firebase API exists when the mixin loads. It is possible to `require` or `import` the Firebase library into your project, but the setup for this is out of the scope of this example.
-
-Once you are setup, visit the link below (replacing `${projectId}` with the projectId from your newly created Firebase project config) and `Enable` the `Email/Password` provider.
+Add this snippet to your `index.html` **before** any of your hyperapp application code. This ensures that the Firebase API exists when the module loads. Once you are setup, visit the link below (replacing `${projectId}` with the projectId from your newly created Firebase project config) and `Enable` the `Email/Password` provider.
 
 ```
 https://console.firebase.google.com/project/${projectId}/authentication/providers
 ```
 
-That is all the back and front end configuration you need to do.. Phew :sweat_smile:
+That is all the back and front end configuration you need to do.
